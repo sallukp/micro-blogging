@@ -1,0 +1,5 @@
+dependencies {
+    // test
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+}

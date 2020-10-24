@@ -1,0 +1,11 @@
+include ':features:profile'
+include ':core:navigation'
+include ':core:models'
+include ':core:repositories'
+include ':core:network'
+include ':core:cache'
+include ':core:di'
+include ':features:blog'
+include ':features:home'
+include ':app'
+rootProject.name = "MicroBlogging"
