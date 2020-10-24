@@ -1,3 +1,4 @@
+include ':common:resources'
 include ':features:profile'
 include ':core:navigation'
 include ':core:models'
