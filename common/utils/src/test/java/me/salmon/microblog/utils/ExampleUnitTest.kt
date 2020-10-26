@@ -1,4 +1,4 @@
-package me.salmon.microblog.network
+package me.salmon.microblog.utils
 
 import org.junit.Test
 

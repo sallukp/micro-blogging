@@ -29,6 +29,8 @@ tasks.whenTaskAdded { task ->
 }
 
 dependencies {
+    implementation project(":common:utils")
+    implementation project(":core:models")
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"

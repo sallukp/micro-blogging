@@ -28,6 +28,8 @@ tasks.whenTaskAdded { task ->
 }
 
 dependencies {
+    implementation project(":common:utils")
+    implementation project(":core:models")
     // room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
