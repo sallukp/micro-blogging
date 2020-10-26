@@ -1,5 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.salmon.microblog.navigation">
 
-    /
+    <application>
+        <activity
+            android:name=".test.helpers.UnImplementedActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".test.helpers.HomeActivity"
+            android:theme="@style/Theme.AppCompat" />
+    </application>
+
 </manifest>

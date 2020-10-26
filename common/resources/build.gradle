@@ -10,4 +10,16 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    tasks.whenTaskAdded { task ->
+        if (task.name.equals("lint")) {
+            //this is for speed up build
+            task.enabled = false
+        }
+        if(task.name.contains("Test"))
+        {
+            //this is what you need
+            task.enabled = false
+        }
+    }
 }

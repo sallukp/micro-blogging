@@ -19,6 +19,15 @@ android {
     }
 }
 
+
+tasks.whenTaskAdded { task ->
+    if(task.name.contains("AndroidTest"))
+    {
+        //this is what you need
+        task.enabled = false
+    }
+}
+
 dependencies {
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

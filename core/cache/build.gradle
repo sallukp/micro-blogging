@@ -19,6 +19,14 @@ android {
     }
 }
 
+tasks.whenTaskAdded { task ->
+    if(task.name.contains("AndroidTest"))
+    {
+        //this is what you need
+        task.enabled = false
+    }
+}
+
 dependencies {
     // room
     implementation "androidx.room:room-runtime:$room_version"

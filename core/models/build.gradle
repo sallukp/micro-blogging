@@ -18,3 +18,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
+
+
+tasks.whenTaskAdded { task ->
+    if(task.name.contains("AndroidTest"))
+    {
+        //this is what you need
+        task.enabled = false
+    }
+}
