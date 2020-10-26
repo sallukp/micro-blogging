@@ -17,7 +17,4 @@ object NetworkConstants {
     // address keys
     const val lat_key = "latitude"
     const val long_key = "longitude"
-
-    // query params
-    const val page_param = "page"
 }

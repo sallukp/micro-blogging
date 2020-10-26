@@ -28,12 +28,14 @@ data class AuthorNetworkEntity(
     var avatarUrl: String?,
 
     @SerializedName(address_key)
-    var address: Address?)
+    var address: Address?) {
 
-data class Address (
+    data class Address(
 
-    @SerializedName(lat_key)
-    var lat: String?,
+        @SerializedName(lat_key)
+        var lat: String?,
 
-    @SerializedName(long_key)
-    var long: String?)
+        @SerializedName(long_key)
+        var long: String?
+    )
+}

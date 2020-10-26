@@ -35,4 +35,7 @@ data class AuthorCacheEntity (
 
     @ColumnInfo(name = long_key)
     var long: Float
-)
+) {
+    constructor(id: Int):
+        this(id, "", "", "", "", 0f, 0f)
+}

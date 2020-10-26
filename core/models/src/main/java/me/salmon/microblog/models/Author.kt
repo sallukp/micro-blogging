@@ -8,4 +8,11 @@ data class Author(val id: Int,
                   val lat: Float,
                   val long: Float) {
 
+    override fun equals(other: Any?): Boolean {
+        (other as? Author)?.let {
+            return it.id == id
+        }
+        return super.equals(other)
+    }
+
 }

@@ -33,4 +33,6 @@ constructor(): EntityMapper<AuthorNetworkEntity, Author>{
 
     override fun mapFromEntities(list: List<AuthorNetworkEntity>) = list.map { mapFromEntity(it) }
 
+    override fun mapToEntities(list: List<Author>) = list.map { mapToEntity(it) }
+
 }

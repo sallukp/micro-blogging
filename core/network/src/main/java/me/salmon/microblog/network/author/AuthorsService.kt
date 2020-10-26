@@ -1,12 +1,12 @@
 package me.salmon.microblog.network.author
 
 import me.salmon.microblog.network.NetworkConstants.author_path
-import me.salmon.microblog.network.NetworkConstants.page_param
 import retrofit2.http.GET
-import retrofit2.http.Query
+import java.lang.Exception
 
 interface AuthorsService {
 
+    @Throws(Exception::class)
     @GET(author_path)
-    suspend fun fetchAuthors(@Query(page_param) page: String)
+    suspend fun fetchAuthors(): List<AuthorNetworkEntity>
 }

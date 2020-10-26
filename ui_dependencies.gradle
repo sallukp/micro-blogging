@@ -1,5 +1,8 @@
 dependencies {
     implementation project(":core:navigation")
+    implementation project(":core:repositories")
+    implementation project(":core:models")
+    implementation project(":common:utils")
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.cardview:cardview:$cardview_version"
