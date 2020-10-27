@@ -1,5 +1,6 @@
 package me.salmon.microblog.utils.views
 
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,10 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import me.salmon.microblog.utils.R
 import me.salmon.microblog.utils.databinding.RecyclerViewFragmentBinding
 
@@ -39,9 +42,16 @@ abstract class RecyclerViewFragment<VH: RecyclerView.ViewHolder>: Fragment() {
 
     private fun initRecyclerView() {
         adapter = createAdapter()
-        val layoutManager = LinearLayoutManager(activity,
-            LinearLayoutManager.VERTICAL, false)
-        binding.recyclerView.layoutManager = layoutManager
+        val orientation = resources.configuration.orientation
+        if (orientation == ORIENTATION_LANDSCAPE) {
+            val layoutManager = StaggeredGridLayoutManager(2,
+                LinearLayoutManager.VERTICAL)
+            binding.recyclerView.layoutManager = layoutManager
+        } else {
+            val layoutManager = LinearLayoutManager(activity,
+                LinearLayoutManager.VERTICAL, false)
+            binding.recyclerView.layoutManager = layoutManager
+        }
         binding.recyclerView.adapter = adapter
     }
     
