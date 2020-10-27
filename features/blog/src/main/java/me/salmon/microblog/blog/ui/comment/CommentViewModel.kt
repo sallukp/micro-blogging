@@ -24,10 +24,7 @@ constructor(val commentsRepository: CommentsRepository,
     fun setStateEvent(commentStateEvent: CommentStateEvent) { viewModelScope.launch {
         when (commentStateEvent) {
             is CommentStateEvent.GetCommentsEvent -> {
-                if (_savedState.value == null) {
-                    fetchAuthors(commentStateEvent.data)
-                }
-                _savedState.postValue(true)
+                fetchAuthors(commentStateEvent.data)
             }
         }
     }

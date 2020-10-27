@@ -27,45 +27,56 @@ class NavigatorUnitTest {
     @Mock
     private val context = mock(Context::class.java)
 
-    @Spy
+    @Mock
     private val navigator = spy(Navigator(context))
 
     @Test
     fun testNavigateToHome() {
         val feature = Navigator.Feature.HOME
-        testNavigate(feature)
+        testNavigate(feature, null)
     }
     @Test
     fun testNavigateToProfile() {
         val feature = Navigator.Feature.PROFILE
-        testNavigate(feature)
+        testNavigate(feature, null)
     }
 
     @Test
     fun testNavigateToBlog() {
         val feature = Navigator.Feature.BLOG
-        testNavigate(feature)
+        testNavigate(feature, null)
     }
 
     @Test
     fun testNavigateToComment() {
         val feature = Navigator.Feature.COMMENT
-        testNavigate(feature)
+        testNavigate(feature, null)
     }
 
-    private fun testNavigate(feature: Navigator.Feature) {
-        whenever(navigator.navigateTo(any())).then {  }
-        feature.enabled = true;
-        navigator.navigate(feature)
+    private fun testNavigate(feature: Navigator.Feature, obj: Any?) {
+        whenever(context.packageName).thenReturn(Constants.packageName)
+        whenever(navigator.getNavigationClass(any())).thenReturn(Constants.homeComponent)
+        val mockIntent = mock(Intent::class.java)
+        whenNew(Intent::class.java).withAnyArguments().thenReturn(mockIntent)
 
-        verify(navigator, times(1)).navigateTo(feature)
+        val mockComponent = mock(ComponentName::class.java)
+        whenever(mockComponent.className).thenReturn(Constants.homeComponent)
+        whenNew(ComponentName::class.java).withArguments(context, Constants.homeComponent)
+            .thenReturn(mockComponent)
+        whenever(mockIntent.component).thenReturn(mockComponent)
+        whenever(mockIntent.setComponent(mockComponent)).thenReturn(mockIntent)
+
+        feature.enabled = true;
+        navigator.navigate(feature, obj)
+
+        verify(navigator, times(1)).navigateTo(feature, obj)
 
         // test feature disabled
         feature.enabled = false
-        navigator.navigate(feature)
+        navigator.navigate(feature, obj)
         // verifies navigateToHome is not called, times(1) because the method was called in the
         // previous step
-        verify(navigator, times(1)).navigateTo(feature)
+        verify(navigator, times(1)).navigateTo(feature, obj)
     }
 
 
@@ -88,7 +99,7 @@ class NavigatorUnitTest {
 
         whenever(mockIntent.setComponent(mockComponent)).thenReturn(expectedIntent)
 
-        navigator.navigateTo(feature)
+        navigator.navigateTo(feature, null)
         val captor = ArgumentCaptor.forClass(Intent::class.java)
         Mockito.verify(context).startActivity(captor.capture())
         Assert.assertTrue(captor.value.component!!.className.contains(Constants.homeComponent))

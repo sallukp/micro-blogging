@@ -2,6 +2,8 @@ package me.salmon.microblog.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import dagger.hilt.android.AndroidEntryPoint
 import me.salmon.microblog.home.databinding.HomeActivityBinding
 import me.salmon.microblog.home.ui.authors.AuthorsFragment

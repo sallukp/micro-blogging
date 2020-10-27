@@ -29,10 +29,7 @@ constructor(
         viewModelScope.launch {
             when (postStateEvent) {
                 is PostStateEvent.GetPostEvent -> {
-                    if (_savedState.value == null) {
-                        fetchPosts(postStateEvent.data)
-                    }
-                    _savedState.postValue(true)
+                    fetchPosts(postStateEvent.data)
                 }
             }
         }

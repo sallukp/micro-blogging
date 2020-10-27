@@ -2,6 +2,7 @@ package me.salmon.microblog.blog
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import dagger.hilt.android.AndroidEntryPoint
 import me.salmon.microblog.blog.ui.comment.CommentFragment
 import me.salmon.microblog.blog.ui.post.PostFragment
@@ -24,5 +25,13 @@ class BlogActivity : AppCompatActivity() {
                 .replace(R.id.post_container, PostFragment.newInstance(post))
                 .commitNow()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> onBackPressed();
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

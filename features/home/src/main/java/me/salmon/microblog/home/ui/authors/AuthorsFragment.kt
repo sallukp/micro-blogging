@@ -1,10 +1,15 @@
 package me.salmon.microblog.home.ui.authors
 
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.RequestManager
 import dagger.hilt.android.AndroidEntryPoint
+import me.salmon.microblog.home.R
 import me.salmon.microblog.models.Author
 import me.salmon.microblog.navigation.Navigator
 import me.salmon.microblog.utils.DataState
@@ -30,16 +35,16 @@ class AuthorsFragment : RecyclerViewFragment<AuthorsAdapter.AuthorsViewHolders>(
         viewModel.dataState.observe(activity as AppCompatActivity, Observer { dataState ->
             when(dataState) {
                 is DataState.Success<List<Author>> -> {
-//                    loading(false)
+                    showLoading(false)
                     (adapter as AuthorsAdapter).authorList = dataState.data
                     adapter.notifyDataSetChanged()
                 }
                 is DataState.Loading -> {
-//                    loading(true)
+                    showLoading(true)
                 }
                 is DataState.Error -> {
-//                    loading(false)
-//                    Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+                    showLoading(false)
+                    showError()
                 }
             }
         })

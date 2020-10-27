@@ -45,16 +45,16 @@ class CommentFragment : RecyclerViewFragment<CommentsAdapter.CommentsViewHolder>
         viewModel.dataState.observe(activity as AppCompatActivity, Observer { dataState ->
             when(dataState) {
                 is DataState.Success<List<Comment>> -> {
-//                    loading(false)
+                    showLoading(false)
                     (adapter as CommentsAdapter).commentsList = dataState.data
                     adapter.notifyDataSetChanged()
                 }
                 is DataState.Loading -> {
-//                    loading(true)
+                    showLoading(true)
                 }
                 is DataState.Error -> {
-//                    loading(false)
-//                    Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+                    showLoading(false)
+                    showError()
                 }
             }
         })

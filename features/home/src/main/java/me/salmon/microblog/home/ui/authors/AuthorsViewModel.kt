@@ -27,10 +27,7 @@ constructor(
     fun setStateEvent(authorStateEvent: AuthorStateEvent) { viewModelScope.launch {
             when (authorStateEvent) {
                 is AuthorStateEvent.GetAuthorEvent -> {
-                    if (_savedState.value == null) {
-                        fetchAuthors()
-                    }
-                    _savedState.postValue(true)
+                    fetchAuthors()
                 }
             }
         }

@@ -49,16 +49,16 @@ class PostFragment : RecyclerViewFragment<PostsAdapter.PostViewHolder>() {
         viewModel.dataState.observe(activity as AppCompatActivity, Observer { dataState ->
             when(dataState) {
                 is DataState.Success<List<Post>> -> {
-//                    loading(false)
+                    showLoading(false)
                     (adapter as PostsAdapter).posts = dataState.data
                     adapter.notifyDataSetChanged()
                 }
                 is DataState.Loading -> {
-//                    loading(true)
+                    showLoading(true)
                 }
                 is DataState.Error -> {
-//                    loading(false)
-//                    Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+                    showLoading(false)
+                    showError()
                 }
             }
         })

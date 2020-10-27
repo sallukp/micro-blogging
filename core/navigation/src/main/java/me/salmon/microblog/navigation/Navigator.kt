@@ -86,9 +86,6 @@ open class Navigator @Inject constructor(val context: Context) {
                         .setComponent(ComponentName(context, getNavigationClass(feature)))
                     putExtra(feature, intent, obj)
                     context.startActivity(intent)
-                    (context as? AppCompatActivity)?.let { activity ->
-                        activity.overridePendingTransition(0, 0)
-                    }
                 }
             }
         }

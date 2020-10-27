@@ -15,6 +15,6 @@ interface CommentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComments(entities: List<CommentCacheEntity>): List<Long>
 
-    @Query("SELECT * FROM comment WHERE pId == :postId ORDER BY id ASC")
+    @Query("SELECT * FROM comment WHERE pId == :postId ORDER BY dt ASC")
     suspend fun fetchComments(postId: Int): List<CommentCacheEntity>
 }

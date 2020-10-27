@@ -137,8 +137,16 @@ class AuthorsRepositoryTest {
 
     @Test
     fun testGetAuthors() = runBlockingTest {
-        authorsRepository.getAuthors()
+        val entities = listOf<AuthorNetworkEntity>()
+
+        val authors = listOf<Author>()
+
+        whenever(authorsService.fetchAuthors()).thenReturn( entities )
+        whenever(networkMapper.mapFromEntities(any())).thenReturn( authors )
+        val flowCollector = mock<FlowCollector<DataState<List<Author>>>>()
+        authorsRepository.getAuthors(flowCollector)
         val orderVerifier = inOrder(authorsRepository)
+
         orderVerifier.verify(authorsRepository).emitLoadingState(any())
         orderVerifier.verify(authorsRepository).getAuthorsCache(any())
         orderVerifier.verify(authorsRepository).getAuthorsFromNetwork(any())

@@ -49,9 +49,11 @@ class ProfileFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         subscribeObservers()
-        val author: Author? = arguments?.getParcelable(Constants.authorExtra)
-        author?.let {
-            viewModel.setStateEvent(ProfileViewModel.ProfileStateEvent.GetProfileState(it))
+        if (savedInstanceState == null) {
+            val author: Author? = arguments?.getParcelable(Constants.authorExtra)
+            author?.let {
+                viewModel.setStateEvent(ProfileViewModel.ProfileStateEvent.GetProfileState(it))
+            }
         }
     }
 

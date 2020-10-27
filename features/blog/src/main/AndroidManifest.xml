@@ -3,7 +3,8 @@
     package="me.salmon.microblog.blog">
 
     <application>
-        <activity android:name=".BlogActivity"></activity>
+        <activity android:name=".BlogActivity"
+            android:label="@string/comments"></activity>
     </application>
 
 </manifest>

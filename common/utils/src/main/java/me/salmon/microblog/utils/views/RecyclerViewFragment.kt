@@ -3,10 +3,14 @@ package me.salmon.microblog.utils.views
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import me.salmon.microblog.utils.R
 import me.salmon.microblog.utils.databinding.RecyclerViewFragmentBinding
 
 abstract class RecyclerViewFragment<VH: RecyclerView.ViewHolder>: Fragment() {
@@ -26,7 +30,8 @@ abstract class RecyclerViewFragment<VH: RecyclerView.ViewHolder>: Fragment() {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
         subscribeObservers()
-        setStateEvent()
+        if (savedInstanceState == null)
+            setStateEvent()
     }
     
     abstract fun setStateEvent()
@@ -42,4 +47,12 @@ abstract class RecyclerViewFragment<VH: RecyclerView.ViewHolder>: Fragment() {
     }
     
     abstract fun createAdapter(): RecyclerView.Adapter<VH>
+
+    fun showLoading(loading: Boolean) {
+        binding.progress.visibility = if (loading) VISIBLE  else GONE
+    }
+
+    fun showError() {
+        Toast.makeText(activity, R.string.could_not_connect, Toast.LENGTH_SHORT).show()
+    }
 }

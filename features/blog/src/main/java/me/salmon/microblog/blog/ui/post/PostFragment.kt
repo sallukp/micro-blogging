@@ -45,9 +45,11 @@ class PostFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         subscribeObservers()
-        val post: Post? = arguments?.getParcelable(Constants.postExtra)
-        post?.let {
-            viewModel.setStateEvent(PostViewModel.PostStateEvent.GetPostEvent(it))
+        if (savedInstanceState == null) {
+            val post: Post? = arguments?.getParcelable(Constants.postExtra)
+            post?.let {
+                viewModel.setStateEvent(PostViewModel.PostStateEvent.GetPostEvent(it))
+            }
         }
     }
 
