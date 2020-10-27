@@ -21,17 +21,17 @@ data class CommentCacheEntity (
     var postId: Int,
 
     @ColumnInfo(name = date_key)
-    var date: String,
+    var date: String?,
 
     @ColumnInfo(name = body_key)
-    var body: String,
+    var body: String?,
 
     @ColumnInfo(name = user_name_key)
-    var userName: String,
+    var userName: String?,
 
     @ColumnInfo(name = email_key)
-    var email: String,
+    var email: String?,
 
     @ColumnInfo(name = avatar_url_key)
-    var avatarUrl: String
+    var avatarUrl: String?
 )

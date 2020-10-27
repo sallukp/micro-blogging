@@ -17,4 +17,5 @@
     <color name="avatar_color_9">#00695C</color>
     <color name="avatar_color_10">#673AB7</color>
     <color name="overlay_color">#AA000000</color>
+    <color name="comment_card_color">#D8D7D6</color>
 </resources>

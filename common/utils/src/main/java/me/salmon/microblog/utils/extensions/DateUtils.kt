@@ -13,4 +13,14 @@ object DateUtils {
         }
         return ""
     }
+
+    fun String?.getFirstLetters(): String {
+        var firstLetters = ""
+        this?.let {
+            it.split(" ", limit = 2).map { part ->
+                firstLetters += if (part.isNotEmpty()) part.subSequence(0, 1) else ""
+            }
+        }
+        return firstLetters
+    }
 }

@@ -1,6 +1,5 @@
-package me.salmon.microblog.profile.ui.post
+package me.salmon.microblog.profile.ui.profile
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.salmon.microblog.models.Author
 import me.salmon.microblog.navigation.Constants
 import me.salmon.microblog.navigation.Navigator
-import me.salmon.microblog.profile.R
 import me.salmon.microblog.profile.databinding.ProfileFragmentBinding
 import javax.inject.Inject
 

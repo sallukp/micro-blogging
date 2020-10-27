@@ -10,7 +10,7 @@ import me.salmon.microblog.navigation.Constants
 import me.salmon.microblog.navigation.components.BlogNavigation
 import me.salmon.microblog.profile.databinding.ProfileActivityBinding
 import me.salmon.microblog.profile.ui.post.PostFragment
-import me.salmon.microblog.profile.ui.post.ProfileFragment
+import me.salmon.microblog.profile.ui.profile.ProfileFragment
 
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity(), BlogNavigation {

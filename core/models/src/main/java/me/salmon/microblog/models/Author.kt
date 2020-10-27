@@ -2,6 +2,7 @@ package me.salmon.microblog.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import me.salmon.microblog.utils.extensions.DateUtils.getFirstLetters
 
 data class Author(val id: Int,
                   val name: String?,
@@ -28,15 +29,7 @@ data class Author(val id: Int,
         return super.equals(other)
     }
 
-    fun getFirstLetters(): String {
-        var firstLetters = ""
-        name?.let {
-            it.split(" ", limit = 2).map { part ->
-                firstLetters += if (part.isNotEmpty()) part.subSequence(0, 1) else ""
-            }
-        }
-        return firstLetters
-    }
+    fun getFirstLetters() = name.getFirstLetters()
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

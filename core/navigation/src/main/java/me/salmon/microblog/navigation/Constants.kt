@@ -11,4 +11,5 @@ object Constants {
 
     //extra keys
     const val authorExtra = "author"
+    const val postExtra = "post"
 }

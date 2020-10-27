@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import me.salmon.microblog.network.NetworkConstants.base_url
 import me.salmon.microblog.network.author.AuthorsService
+import me.salmon.microblog.network.comment.CommentService
 import me.salmon.microblog.network.post.PostsService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -38,4 +39,9 @@ object NetworkModule {
     @Provides
     fun providePostsService(retrofit: Retrofit): PostsService = retrofit
         .create(PostsService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideCommentsService(retrofit: Retrofit): CommentService = retrofit
+        .create(CommentService::class.java)
 }

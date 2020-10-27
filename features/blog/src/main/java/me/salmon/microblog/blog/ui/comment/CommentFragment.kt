@@ -1,32 +1,65 @@
 package me.salmon.microblog.blog.ui.comment
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import me.salmon.microblog.blog.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.bumptech.glide.RequestManager
+import dagger.hilt.android.AndroidEntryPoint
+import me.salmon.microblog.models.Comment
+import me.salmon.microblog.models.Post
+import me.salmon.microblog.navigation.Constants
+import me.salmon.microblog.navigation.Navigator
+import me.salmon.microblog.utils.DataState
+import me.salmon.microblog.utils.views.RecyclerViewFragment
+import javax.inject.Inject
 
-class CommentFragment : Fragment() {
+@AndroidEntryPoint
+class CommentFragment : RecyclerViewFragment<CommentsAdapter.CommentsViewHolder>() {
+
+    private val viewModel: CommentViewModel by viewModels()
+
+    @Inject
+    lateinit var glideRequests: RequestManager
+
+    @Inject
+    lateinit var navigator: Navigator
 
     companion object {
-        fun newInstance() = CommentFragment()
+        fun newInstance(post: Post?): CommentFragment {
+            val fragment = CommentFragment()
+            fragment.arguments = Bundle()
+            fragment.arguments?.putParcelable(Constants.postExtra, post)
+            return fragment
+        }
     }
 
-    private lateinit var viewModel: CommentViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.comment_fragment, container, false)
+    override fun setStateEvent() {
+        var post: Post? = arguments?.getParcelable(Constants.postExtra)
+        post?.let {
+            viewModel.setStateEvent(CommentViewModel.CommentStateEvent.GetCommentsEvent(it.id))
+        }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(CommentViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun subscribeObservers() {
+        viewModel.dataState.observe(activity as AppCompatActivity, Observer { dataState ->
+            when(dataState) {
+                is DataState.Success<List<Comment>> -> {
+//                    loading(false)
+                    (adapter as CommentsAdapter).commentsList = dataState.data
+                    adapter.notifyDataSetChanged()
+                }
+                is DataState.Loading -> {
+//                    loading(true)
+                }
+                is DataState.Error -> {
+//                    loading(false)
+//                    Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+                }
+            }
+        })
     }
+
+    override fun createAdapter() = CommentsAdapter(navigator, glideRequests)
 
 }

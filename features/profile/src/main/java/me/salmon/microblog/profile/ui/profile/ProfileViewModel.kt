@@ -1,4 +1,4 @@
-package me.salmon.microblog.profile.ui.post
+package me.salmon.microblog.profile.ui.profile
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -7,8 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import me.salmon.microblog.models.Author
-import me.salmon.microblog.models.Post
-import me.salmon.microblog.utils.DataState
 
 class ProfileViewModel
 @ViewModelInject

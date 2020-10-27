@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import me.salmon.microblog.models.Author
+import me.salmon.microblog.navigation.components.BlogNavigation
 import me.salmon.microblog.navigation.components.HomeNavigation
 import me.salmon.microblog.navigation.components.ProfileNavigation
 import java.lang.Exception
@@ -48,16 +49,18 @@ open class Navigator @Inject constructor(val context: Context) {
                     }
                 }
                 Feature.BLOG -> {
-                    TODO("Not yet implemented")
+                    (context as? BlogNavigation)?.let {
+                        return it.blogActivityClass()
+                    }
                 }
                 Feature.COMMENT -> {
                     TODO("Not yet implemented")
                 }
                 Feature.MAP -> {
-
+                    // ACTION_VIEW intent
                 }
                 Feature.EMAIL -> {
-
+                    // ACTION_VIEW intent
                 }
             }
         }
@@ -107,6 +110,9 @@ open class Navigator @Inject constructor(val context: Context) {
             when(feature) {
                 Feature.PROFILE -> {
                     intent.putExtra(Constants.authorExtra, obj as Parcelable)
+                }
+                Feature.BLOG -> {
+                    intent.putExtra(Constants.postExtra, obj as Parcelable)
                 }
                 else -> {
                     // do nothing
