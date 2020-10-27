@@ -19,33 +19,10 @@ import org.junit.runner.RunWith
 @LargeTest
 class SplashActivityTest {
 
-    private lateinit var activityScenario: ActivityScenario<SplashActivity>
-
-    @After
-    fun cleanup() {
-        activityScenario.close()
-    }
-
-    @Test
-    fun checkHiltEntryPointAnnotation() {
-        activityScenario = launchActivity()
-        activityScenario.onActivity { activity ->
-            assertTrue(activity.javaClass.isAnnotationPresent(AndroidEntryPoint::class.java))
-        }
-    }
-
-    @Test
-    fun checkNavigatorInjection() {
-        activityScenario = launchActivity()
-        activityScenario.onActivity { activity ->
-            assertNotNull(activity.navigator)
-        }
-    }
-
     @Test
     fun testHomeActivityNavigation() {
         Intents.init()
-        activityScenario = launchActivity()
+        launchActivity<SplashActivity>()
         intended(hasComponent(HomeActivity::class.java.name))
         Intents.release()
     }

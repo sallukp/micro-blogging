@@ -3,6 +3,7 @@ package me.salmon.microblog
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import com.nhaarman.mockitokotlin2.whenever
+import dagger.hilt.android.AndroidEntryPoint
 import me.salmon.microblog.navigation.Navigator
 import me.salmon.microblog.navigation.components.HomeNavigation
 import org.junit.Test
@@ -48,5 +49,10 @@ class SplashActivityUnitTest {
         doNothing().whenever(splashActivity).navigateToHome()
         splashActivity.onPostCreate(null)
         verify(splashActivity).navigateToHome()
+    }
+
+    @Test
+    fun checkHiltEntryPointAnnotation() {
+        SplashActivity::class.java.isAnnotationPresent(AndroidEntryPoint::class.java)
     }
 }

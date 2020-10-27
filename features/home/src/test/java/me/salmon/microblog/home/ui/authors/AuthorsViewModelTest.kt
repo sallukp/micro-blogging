@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -22,6 +23,7 @@ import org.mockito.Spy
 import org.powermock.api.mockito.PowerMockito.mock
 import org.powermock.modules.junit4.PowerMockRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(PowerMockRunner::class)
 class AuthorsViewModelTest {
 

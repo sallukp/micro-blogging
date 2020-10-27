@@ -1,6 +1,7 @@
 package me.salmon.microblog.repositories
 
 import com.nhaarman.mockitokotlin2.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.map
@@ -24,6 +25,7 @@ import org.powermock.api.mockito.PowerMockito.spy
 import org.powermock.modules.junit4.PowerMockRunner
 
 
+@ExperimentalCoroutinesApi
 @RunWith(PowerMockRunner::class)
 class AuthorsRepositoryTest {
 
