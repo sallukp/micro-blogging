@@ -15,7 +15,7 @@ constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    private var _post: MutableLiveData<Post> = MutableLiveData()
+    private var _post: MutableLiveData<Post> = savedStateHandle.getLiveData(state_key)
 
     val post: LiveData<Post>
         get () = _post
@@ -30,5 +30,9 @@ constructor(
 
     sealed class PostStateEvent {
         data class GetPostEvent(val data: Post): PostStateEvent()
+    }
+
+    companion object {
+        const val state_key = "state"
     }
 }

@@ -13,21 +13,21 @@ import me.salmon.microblog.utils.DataState
 class AuthorsViewModel
 @ViewModelInject
 constructor(
-    private val authorsRepository: AuthorsRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val authorsRepository: AuthorsRepository
 ) : ViewModel() {
 
     private var _dataState: MutableLiveData<DataState<List<Author>>> = MutableLiveData()
 
-    private var _savedState: MutableLiveData<Boolean> = savedStateHandle.getLiveData(state_key)
-
     val dataState: LiveData<DataState<List<Author>>>
         get () = _dataState
 
-    fun setStateEvent(authorStateEvent: AuthorStateEvent) { viewModelScope.launch {
-            when (authorStateEvent) {
-                is AuthorStateEvent.GetAuthorEvent -> {
-                    fetchAuthors()
+    fun setStateEvent(authorStateEvent: AuthorStateEvent) {
+        when(authorStateEvent) {
+            is AuthorStateEvent.GetAuthorEvent -> {
+                if (_dataState.value !is DataState.Success) {
+                    viewModelScope.launch {
+                        fetchAuthors()
+                    }
                 }
             }
         }
@@ -42,9 +42,5 @@ constructor(
 
     sealed class AuthorStateEvent {
         object GetAuthorEvent: AuthorStateEvent()
-    }
-
-    companion object {
-        const val state_key = "state"
     }
 }

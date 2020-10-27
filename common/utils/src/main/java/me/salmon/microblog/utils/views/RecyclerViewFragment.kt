@@ -30,8 +30,7 @@ abstract class RecyclerViewFragment<VH: RecyclerView.ViewHolder>: Fragment() {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
         subscribeObservers()
-        if (savedInstanceState == null)
-            setStateEvent()
+        setStateEvent()
     }
     
     abstract fun setStateEvent()

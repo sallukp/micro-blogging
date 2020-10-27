@@ -12,22 +12,22 @@ import me.salmon.microblog.utils.DataState
 
 class CommentViewModel
 @ViewModelInject
-constructor(val commentsRepository: CommentsRepository,
-            @Assisted val savedStateHandle: SavedStateHandle): ViewModel() {
+constructor(val commentsRepository: CommentsRepository): ViewModel() {
     private var _dataState: MutableLiveData<DataState<List<Comment>>> = MutableLiveData()
-
-    private var _savedState: MutableLiveData<Boolean> = savedStateHandle.getLiveData(state_key)
 
     val dataState: LiveData<DataState<List<Comment>>>
         get () = _dataState
 
-    fun setStateEvent(commentStateEvent: CommentStateEvent) { viewModelScope.launch {
-        when (commentStateEvent) {
+    fun setStateEvent(commentStateEvent: CommentStateEvent) {
+        when(commentStateEvent) {
             is CommentStateEvent.GetCommentsEvent -> {
-                fetchAuthors(commentStateEvent.data)
+                if (_dataState.value !is DataState.Success) {
+                    viewModelScope.launch {
+                        fetchAuthors(commentStateEvent.data)
+                    }
+                }
             }
         }
-    }
     }
 
     private fun fetchAuthors(postId: Int) =
@@ -39,9 +39,5 @@ constructor(val commentsRepository: CommentsRepository,
 
     sealed class CommentStateEvent {
         data class GetCommentsEvent(val data: Int): CommentStateEvent()
-    }
-
-    companion object {
-        const val state_key = "state"
     }
 }

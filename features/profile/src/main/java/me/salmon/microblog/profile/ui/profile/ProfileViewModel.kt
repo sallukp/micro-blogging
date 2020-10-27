@@ -14,7 +14,7 @@ constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    private var _author: MutableLiveData<Author> = MutableLiveData()
+    private var _author: MutableLiveData<Author> = savedStateHandle.getLiveData(status_key)
 
     val author: LiveData<Author>
         get () = _author
@@ -29,5 +29,9 @@ constructor(
 
     sealed class ProfileStateEvent {
         data class GetProfileState(val data: Author): ProfileStateEvent()
+    }
+
+    companion object {
+        const val status_key = "status"
     }
 }

@@ -14,22 +14,21 @@ import me.salmon.microblog.utils.DataState
 class PostViewModel
 @ViewModelInject
 constructor(
-    private val postsRepository: PostsRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val postsRepository: PostsRepository
 ) : ViewModel() {
 
     private var _dataState: MutableLiveData<DataState<List<Post>>> = MutableLiveData()
-
-    private var _savedState: MutableLiveData<Boolean> = savedStateHandle.getLiveData(state_key)
 
     val dataState: LiveData<DataState<List<Post>>>
         get () = _dataState
 
     fun setStateEvent(postStateEvent: PostStateEvent) {
-        viewModelScope.launch {
-            when (postStateEvent) {
-                is PostStateEvent.GetPostEvent -> {
-                    fetchPosts(postStateEvent.data)
+        when(postStateEvent) {
+            is PostStateEvent.GetPostEvent -> {
+                if (_dataState.value !is DataState.Success) {
+                    viewModelScope.launch {
+                        fetchPosts(postStateEvent.data)
+                    }
                 }
             }
         }
@@ -44,9 +43,5 @@ constructor(
 
     sealed class PostStateEvent {
         data class GetPostEvent(val data: Int): PostStateEvent()
-    }
-
-    companion object {
-        const val state_key = "state"
     }
 }

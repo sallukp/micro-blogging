@@ -20,7 +20,6 @@ class ProfileActivity : AppCompatActivity(), BlogNavigation {
 
     private lateinit var author: Author
     private lateinit var binding: ProfileActivityBinding
-    private lateinit var profileFragment: ProfileFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +35,8 @@ class ProfileActivity : AppCompatActivity(), BlogNavigation {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.post_container, PostFragment.newInstance(author))
                 .commitNow()
-            profileFragment = ProfileFragment.newInstance(author);
             supportFragmentManager.beginTransaction()
-                .replace(R.id.author_container, profileFragment)
+                .replace(R.id.author_container, ProfileFragment.newInstance(author))
                 .commitNow()
         }
         handleToolbarScroll()
@@ -51,9 +49,13 @@ class ProfileActivity : AppCompatActivity(), BlogNavigation {
                 title = ""
                 supportActionBar?.title = ""
                 binding.toolbarLayout.title = ""
-                profileFragment.binding.root.visibility = VISIBLE
+                (supportFragmentManager.findFragmentById(R.id.author_container) as? ProfileFragment)?.let {
+                    it.binding.root.visibility = VISIBLE
+                }
             } else {
-                profileFragment.binding.root.visibility = INVISIBLE
+                (supportFragmentManager.findFragmentById(R.id.author_container) as? ProfileFragment)?.let {
+                    it.binding.root.visibility = INVISIBLE
+                }
                 title = author.name
                 supportActionBar?.title = author.name
                 binding.toolbarLayout.title = author.name
