@@ -38,4 +38,11 @@ data class AuthorCacheEntity (
 ) {
     constructor(id: Int):
         this(id, "", "", "", "", 0f, 0f)
+
+    override fun equals(other: Any?): Boolean {
+        (other as? AuthorCacheEntity)?.let {
+            it.id = id
+        }
+        return super.equals(other)
+    }
 }

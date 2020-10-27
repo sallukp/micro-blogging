@@ -9,4 +9,5 @@ dependencies {
     testImplementation "org.powermock:powermock-api-mockito2:$powermock_version"
     testImplementation "org.powermock:powermock-module-junit4:$powermock_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_core_testing"
 }

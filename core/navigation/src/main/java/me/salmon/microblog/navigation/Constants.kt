@@ -1,11 +1,14 @@
 package me.salmon.microblog.navigation
 
 object Constants {
-    val packageName = "me.salmon.microblog"
-    val homeComponent = "me.salmon.microblog.home.HomeActivity"
-    val profileComponent = "me.salmon.microblog.profile.ProfileActivity"
-    val blogComponent = "me.salmon.microblog.blog.BlogActivity"
+    const val packageName = "me.salmon.microblog"
+    const val homeComponent = "me.salmon.microblog.home.HomeActivity"
+    const val profileComponent = "me.salmon.microblog.profile.ProfileActivity"
+    const val blogComponent = "me.salmon.microblog.blog.BlogActivity"
 
     // exception
-    val homeUnimplmentedException = "HomeNavigation is not implemented"
+    const val homeUnImplementedException = "HomeNavigation is not implemented"
+
+    //extra keys
+    const val authorExtra = "author"
 }

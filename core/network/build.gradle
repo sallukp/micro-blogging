@@ -33,6 +33,6 @@ dependencies {
     implementation project(":core:models")
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
 }

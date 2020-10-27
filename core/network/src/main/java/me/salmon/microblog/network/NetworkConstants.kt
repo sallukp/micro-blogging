@@ -4,7 +4,7 @@ object NetworkConstants {
 
     // url
     const val base_url = "https://sym-json-server.herokuapp.com/"
-    const val author_path = "auth"
+    const val author_path = "authors"
 
     // author keys
     const val id_key = "id"

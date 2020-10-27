@@ -23,11 +23,9 @@ class SplashActivity : AppCompatActivity(), HomeNavigation {
     }
 
     fun navigateToHome() {
-        navigator.navigate(Navigator.Feature.HOME)
+        navigator.navigate(Navigator.Feature.HOME, null)
         finish()
     }
 
-    override fun homeActivityClass(): String {
-        return HomeActivity::class.java.name
-    }
+    override fun homeActivityClass(): String = HomeActivity::class.java.name
 }

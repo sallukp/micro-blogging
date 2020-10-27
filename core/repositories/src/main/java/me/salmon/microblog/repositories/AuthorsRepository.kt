@@ -19,7 +19,13 @@ constructor(
     private val cacheMapper: AuthorCacheMapper) {
 
     suspend fun getAuthors(): Flow<DataState<List<Author>>> = flow {
+        emitLoadingState(this)
+        getAuthorsCache(this)
+        getAuthorsFromNetwork(this)
+    }
 
+    suspend fun emitLoadingState(flow: FlowCollector<DataState<List<Author>>>) {
+        flow.emit(DataState.Loading)
     }
 
     suspend fun getAuthorsCache(flow: FlowCollector<DataState<List<Author>>>) {

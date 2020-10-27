@@ -2,6 +2,8 @@ package me.salmon.microblog.repositories
 
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runBlockingTest
 import me.salmon.microblog.cache.author.AuthorCacheEntity
 import me.salmon.microblog.cache.author.AuthorCacheMapper
@@ -11,15 +13,15 @@ import me.salmon.microblog.network.author.AuthorNetworkEntity
 import me.salmon.microblog.network.author.AuthorNetworkMapper
 import me.salmon.microblog.network.author.AuthorsService
 import me.salmon.microblog.utils.DataState
-import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Spy
 import org.powermock.api.mockito.PowerMockito.mock
+import org.powermock.api.mockito.PowerMockito.spy
 import org.powermock.modules.junit4.PowerMockRunner
-import java.lang.Exception
 
 
 @RunWith(PowerMockRunner::class)
@@ -40,9 +42,15 @@ class AuthorsRepositoryTest {
     @Spy
     val authorsRepository = spy(AuthorsRepository(authorsService, authorsDao, networkMapper, cacheMapper))
 
-    @Test
-    fun testGetAuthors() {
 
+    @Test
+    fun testEmitLoadingState() = runBlockingTest {
+        val flowCollector = mock<FlowCollector<DataState<List<Author>>>>()
+        authorsRepository.emitLoadingState(flowCollector)
+
+        val captor = argumentCaptor<DataState.Loading>()
+        verify(flowCollector).emit(captor.capture())
+        assertEquals(DataState.Loading, captor.firstValue)
     }
 
     @Test
@@ -124,5 +132,15 @@ class AuthorsRepositoryTest {
         verify(flowCollector, times(2)).emit(errorCapture.capture())
         assertEquals(exception.localizedMessage, errorCapture.secondValue.exception.localizedMessage)
 
+    }
+
+
+    @Test
+    fun testGetAuthors() = runBlockingTest {
+        authorsRepository.getAuthors()
+        val orderVerifier = inOrder(authorsRepository)
+        orderVerifier.verify(authorsRepository).emitLoadingState(any())
+        orderVerifier.verify(authorsRepository).getAuthorsCache(any())
+        orderVerifier.verify(authorsRepository).getAuthorsFromNetwork(any())
     }
 }

@@ -3,8 +3,15 @@ package me.salmon.microblog.navigation
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Parcelable
+import androidx.appcompat.app.AppCompatActivity
+import me.salmon.microblog.models.Author
 import me.salmon.microblog.navigation.components.HomeNavigation
+import me.salmon.microblog.navigation.components.ProfileNavigation
+import java.lang.Exception
 import javax.inject.Inject
+
 
 open class Navigator @Inject constructor(val context: Context) {
 
@@ -12,14 +19,15 @@ open class Navigator @Inject constructor(val context: Context) {
         HOME(true),
         PROFILE(true),
         BLOG(true),
-        COMMENT(false)
+        COMMENT(false),
+        MAP(true)
     }
 
 
-    fun navigate(feature: Feature?) {
+    fun navigate(feature: Feature?, obj: Any?) {
         feature?.let {
             if (it.enabled) {
-                navigateTo(it)
+                navigateTo(it, obj)
             }
         }
     }
@@ -34,7 +42,9 @@ open class Navigator @Inject constructor(val context: Context) {
                     }
                 }
                 Feature.PROFILE -> {
-                    TODO("Not yet implemented")
+                    (context as? ProfileNavigation)?.let {
+                        return it.profileActivityClass()
+                    }
                 }
                 Feature.BLOG -> {
                     TODO("Not yet implemented")
@@ -42,17 +52,60 @@ open class Navigator @Inject constructor(val context: Context) {
                 Feature.COMMENT -> {
                     TODO("Not yet implemented")
                 }
+                Feature.MAP -> {
+
+                }
             }
         }
         // return empty for testing purposes
         return ""
     }
 
-    fun navigateTo(feature: Feature?) {
-        feature?.let {
-            val intent = Intent()
-                .setComponent(ComponentName(context, getNavigationClass(it)))
+    fun navigateTo(feature: Feature?, obj: Any?) {
+        feature?.let { feature->
+            when(feature) {
+                Feature.MAP -> {
+                    (obj as? Author)?.let { author ->
+                        openMap(author)
+                    }
+                }
+                else -> {
+                    val intent = Intent()
+                        .setComponent(ComponentName(context, getNavigationClass(feature)))
+                    putExtra(feature, intent, obj)
+                    context.startActivity(intent)
+                    (context as? AppCompatActivity)?.let { activity ->
+                        activity.overridePendingTransition(0, 0)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun putExtra(feature: Feature, intent: Intent, obj: Any?) {
+        obj?.let {
+            when(feature) {
+                Feature.PROFILE -> {
+                    intent.putExtra(Constants.authorExtra, obj as Parcelable)
+                }
+                else -> {
+                    // do nothing
+                }
+            }
+        }
+    }
+
+    private fun openMap(author: Author) {
+        try {
+            val action = "geo:${author.lat},${author.long}?q=${author.lat},${author.long}(${author.name})"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(action))
             context.startActivity(intent)
+        } catch (_: Exception) {
+            try {
+                val uri = "https://maps.google.com/maps?saddr=${author.lat},${author.long}"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                context.startActivity(intent)
+            } catch (_: Exception) { }
         }
     }
 
