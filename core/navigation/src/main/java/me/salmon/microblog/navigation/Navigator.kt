@@ -20,7 +20,8 @@ open class Navigator @Inject constructor(val context: Context) {
         PROFILE(true),
         BLOG(true),
         COMMENT(false),
-        MAP(true)
+        MAP(true),
+        EMAIL(true)
     }
 
 
@@ -55,6 +56,9 @@ open class Navigator @Inject constructor(val context: Context) {
                 Feature.MAP -> {
 
                 }
+                Feature.EMAIL -> {
+
+                }
             }
         }
         // return empty for testing purposes
@@ -64,6 +68,11 @@ open class Navigator @Inject constructor(val context: Context) {
     fun navigateTo(feature: Feature?, obj: Any?) {
         feature?.let { feature->
             when(feature) {
+                Feature.EMAIL -> {
+                    (obj as? String)?.let {
+                        openEmail(it)
+                    }
+                }
                 Feature.MAP -> {
                     (obj as? Author)?.let { author ->
                         openMap(author)
@@ -82,6 +91,17 @@ open class Navigator @Inject constructor(val context: Context) {
         }
     }
 
+    private fun openEmail(email: String) {
+        try {
+            val uri = Uri.parse("mailto:${email}")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            context.startActivity(intent)
+        } catch (_: Exception) {
+
+        }
+
+    }
+
     private fun putExtra(feature: Feature, intent: Intent, obj: Any?) {
         obj?.let {
             when(feature) {
@@ -97,8 +117,8 @@ open class Navigator @Inject constructor(val context: Context) {
 
     private fun openMap(author: Author) {
         try {
-            val action = "geo:${author.lat},${author.long}?q=${author.lat},${author.long}(${author.name})"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(action))
+            val mapUri = "geo:${author.lat},${author.long}?q=${author.lat},${author.long}(${author.name})"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapUri))
             context.startActivity(intent)
         } catch (_: Exception) {
             try {

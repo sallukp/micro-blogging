@@ -14,10 +14,18 @@ import com.bumptech.glide.request.target.Target
 import me.salmon.microblog.utils.R
 import me.salmon.microblog.utils.databinding.AvatarViewBinding
 
+
 class AvatarView(context: Context, attrs: AttributeSet): LinearLayout(context, attrs) {
 
     var binding: AvatarViewBinding =
         AvatarViewBinding.inflate(LayoutInflater.from(context), this, true)
+
+    init {
+        var a = context.obtainStyledAttributes(attrs, R.styleable.AvatarView, 0, 0)
+        val radius = a.getDimension(R.styleable.AvatarView_avatarRadius,
+            context.resources.getDimension(R.dimen.avatar_radius))
+        binding.cardView.radius = radius
+    }
 
     fun setAvatar(id: Int, text: String, url: String?, requestManager: RequestManager) {
         binding.firstLetterText.setBackgroundResource(getColorResource(id))

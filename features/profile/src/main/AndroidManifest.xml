@@ -3,7 +3,8 @@
     package="me.salmon.microblog.profile">
 
     <application>
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

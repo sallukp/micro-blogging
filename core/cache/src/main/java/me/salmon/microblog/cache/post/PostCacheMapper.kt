@@ -2,8 +2,11 @@ package me.salmon.microblog.cache.post
 
 import me.salmon.microblog.models.Post
 import me.salmon.microblog.utils.EntityMapper
+import javax.inject.Inject
 
-class PostCacheMapper: EntityMapper<PostCacheEntity, Post> {
+class PostCacheMapper
+@Inject
+constructor() : EntityMapper<PostCacheEntity, Post> {
     override fun mapFromEntity(entity: PostCacheEntity) = Post(entity.id, entity.authorId, entity.date,
         entity.title, entity.body, entity.imageUrl)
 

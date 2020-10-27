@@ -38,6 +38,9 @@ class AuthorsAdapter(val navigator: Navigator, val glideRequests: RequestManager
             binding.root.setOnClickListener {
                 navigator.navigate(Navigator.Feature.PROFILE, author)
             }
+            binding.emailButton.setOnClickListener {
+                navigator.navigate(Navigator.Feature.EMAIL, author.email)
+            }
         }
     }
 }
