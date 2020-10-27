@@ -30,9 +30,6 @@ class AuthorsViewModelTest {
     @Mock
     val repository = mock(AuthorsRepository::class.java)
 
-    @Spy
-    val savedStateHandle = spy(SavedStateHandle())
-
     private val testDispatcher = TestCoroutineDispatcher()
 
     @Before
@@ -49,7 +46,7 @@ class AuthorsViewModelTest {
 
     @Test
     fun testSetStateEvent() = runBlockingTest {
-        val authorsViewModel = AuthorsViewModel(repository, savedStateHandle)
+        val authorsViewModel = AuthorsViewModel(repository)
         val authors = mutableListOf<Author>()
         authors.add(Author(1, "", "", "", "", 0f, 0f))
         val stateEvent = AuthorsViewModel.AuthorStateEvent.GetAuthorEvent
