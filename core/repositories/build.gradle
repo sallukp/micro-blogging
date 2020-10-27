@@ -18,3 +18,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
+
+dependencies {
+    implementation project(":core:cache")
+    implementation project(":core:network")
+    implementation project(":core:models")
+    implementation project(":common:utils")
+}
+
+
+tasks.whenTaskAdded { task ->
+    if(task.name.contains("AndroidTest"))
+    {
+        //this is what you need
+        task.enabled = false
+    }
+}

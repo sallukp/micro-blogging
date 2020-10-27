@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply from: '../../main_dependencies.gradle'
-apply from: '../../ui_dependencies.gradle'
+apply from: '../../feature_dependencies.gradle'
 apply from: '../../android_test_dependencies.gradle'
 apply from: '../../test_dependencies.gradle'
 
@@ -19,4 +19,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+}
+
+dependencies {
+    implementation project(":features:blog")
 }

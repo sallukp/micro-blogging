@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 apply from: '../../main_dependencies.gradle'
 apply from: '../../test_dependencies.gradle'
+apply from: '../../android_test_dependencies.gradle'
 
 android {
     compileSdkVersion 29
@@ -17,4 +18,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+}
+
+dependencies {
+    implementation project(":core:models")
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
 }

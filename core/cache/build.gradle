@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 apply from: '../../main_dependencies.gradle'
 apply from: '../../test_dependencies.gradle'
+apply from: '../../android_test_dependencies.gradle'
 
 android {
     compileSdkVersion 29
@@ -20,8 +21,12 @@ android {
 }
 
 dependencies {
+    implementation project(":common:utils")
+    implementation project(":core:models")
+
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
     // room
-    implementation "androidx.room:room-runtime:$room_version"
+    api "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
